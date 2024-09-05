@@ -1,12 +1,13 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import Sidebar from 'Components/Sidebar';
-
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import RoutesWithContexts from "Routes/RoutesWithContexts";
+import RoutesWithoutContexts from "Routes/RoutesWithoutContexts";
 
 function App() {
   return (
     <BrowserRouter>
-      <Sidebar/>
+      <RoutesWithContexts />
+      <RoutesWithoutContexts />
     </BrowserRouter>
   );
 }
