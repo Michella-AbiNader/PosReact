@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 // Importing React and specific hooks (useContext, useRef, useState) from the React library.
 
 import { CategoriesContext } from "Contexts/CategoriesContext";
@@ -6,6 +6,8 @@ import { CategoriesContext } from "Contexts/CategoriesContext";
 
 import handlePostProduct from "Utilities/postProducts";
 // Importing the handlePostProduct function from a utility module to handle posting product data.
+
+import fetchProducts from "Utilities/fetchProducts";
 
 import "Styles/Desktop/Products.css";
 // Importing the CSS file for styling the Products component.
@@ -25,6 +27,13 @@ function Products() {
   });
   // Declaring a state variable item and its setter setItem using the useState hook.
   // Initial state is an object with default values for product properties.
+
+  const [products,setProducts] = useState([])
+
+  const fetchProductsList = useCallback(async()=>{
+    const config = ["Title", "Description", "Category", "Price", "Image"]
+
+  })
 
   const formRef = useRef(null);
   // Creating a reference to the form element using the useRef hook, initialized with null.
