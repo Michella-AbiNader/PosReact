@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 // Importing React and specific hooks (useContext, useRef, useState) from the React library.
 
 import { CategoriesContext } from "Contexts/CategoriesContext";
@@ -8,6 +8,7 @@ import handlePostProduct from "Utilities/postProducts";
 // Importing the handlePostProduct function from a utility module to handle posting product data.
 
 import fetchProducts from "Utilities/fetchProducts";
+import Table from "Components/Table";
 
 import "Styles/Desktop/Products.css";
 // Importing the CSS file for styling the Products component.
@@ -29,12 +30,21 @@ function Products() {
   // Initial state is an object with default values for product properties.
 
   const [products,setProducts] = useState([])
+  const productKeys = products.length > 0 ? Object.keys(products[0]): []
 
   const fetchProductsList = useCallback(async()=>{
     const config = ["Title", "Description", "Category", "Price", "Image"]
+    await fetchProducts(setProducts, config)
+  }, [setProducts])
 
-  })
+const stopRender = useRef(true)
 
+  useEffect(()=>{
+    if(stopRender.current === true){
+      fetchProductsList()
+      stopRender.current = false
+    }
+  }, [fetchProductsList])
   const formRef = useRef(null);
   // Creating a reference to the form element using the useRef hook, initialized with null.
 
@@ -66,7 +76,7 @@ function Products() {
 
     await handlePostProduct(item);
     // Awaiting the asynchronous call to handlePostProduct to post the product data.
-
+    await fetchProductsList()
     setItem({
       title: "",
       description: "",
@@ -142,6 +152,7 @@ function Products() {
             <button type="submit">Add Product</button>
             {/* Creating a submit button to add the product when the form is submitted. */}
           </form>
+          <Table rows={products} headers={productKeys}/>
         </div>
       </div>
     </React.Fragment>

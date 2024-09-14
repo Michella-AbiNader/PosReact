@@ -23,7 +23,7 @@ export {postProducts}
 
 export async function getProducts(){
     const token = Cookies.get("token")
-    const route = process.nextTick.EACT_APP_API_ROUTE;
+    const route = process.env.REACT_APP_API_ROUTE;
     const response = await axios.get(`${route/products}`,{
         headers:{
             Authorization: `Bearer ${token}`
